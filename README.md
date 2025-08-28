@@ -10,62 +10,76 @@ A customizable Ludo game built with React Native featuring traditional board lay
 - **Color Themes**: Multiple color schemes for visual customization
 - **4-Player Support**: Full multiplayer gameplay
 
-## 📱 Build APK with GitHub Actions
+## 📱 Development Setup
 
-This project is configured to automatically build APKs using GitHub Actions:
+### Prerequisites:
+- Node.js 18+
+- React Native CLI
+- Android Studio (for local development)
 
-### Setup Instructions:
-
-1. **Fork or Clone** this repository to your GitHub account
-2. **Push your changes** to the main branch
-3. **GitHub Actions will automatically build** the APK
-4. **Download the APK** from the Actions tab
-
-### Manual Build Commands:
-
+### Installation:
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/ludo-game.git
-cd ludo-game
-
 # Install dependencies
 npm install
 
-# For local development
+# Start Metro bundler
+npx react-native start
+
+# Run on Android (requires Android Studio setup)
 npx react-native run-android
 ```
 
-### GitHub Actions Workflow:
+## 🔧 Project Structure
 
-The `.github/workflows/build-apk.yml` file automatically:
-- Sets up Node.js and Android SDK
-- Installs dependencies
-- Builds release APK
-- Makes APK available for download
+```
+src/
+├── components/
+│   ├── DiceComponent.tsx    # Animated dice with multiple modes
+│   └── GameBoard.tsx        # Traditional Ludo board layout
+├── screens/
+│   ├── GameScreen.tsx       # Main gameplay screen
+│   └── SettingsScreen.tsx   # Game customization
+├── utils/
+│   ├── gameEngine.ts        # Core game logic
+│   └── types.ts             # TypeScript definitions
+└── App.tsx                  # Main app component
+```
 
-## 🎮 Game Rules
+## 🎮 Game Features
+
+### Customizable Gameplay:
+- **Single or Double Dice**: Choose 1 or 2 dice
+- **Dice Modes**: Sum, Choice, or Both modes for 2-dice play
+- **Advanced Rules**: Safe spot blocking, mandatory capture
+- **Manual Moves**: No automatic move suggestions
+
+### Visual Customization:
+- **Color Themes**: Classic, Neon, Pastel, Ocean
+- **Traditional Board**: Authentic 15x15 cross layout
+- **Player Colors**: Red, Green, Blue, Yellow
+
+## 📦 Building APK
+
+The project includes GitHub Actions workflow for automatic APK building:
+
+1. Push code to GitHub repository
+2. Go to Actions tab → "React Native APK Build"
+3. Download the generated APK from artifacts
+
+## � Game Rules
 
 - Roll dice to move tokens around the board
 - Get all 4 tokens to the center to win
 - Capture opponent tokens by landing on them
 - Safe spots protect tokens from capture
-- Advanced rules can be customized in settings
+- Customizable rules for competitive play
 
-## 🔧 Development
+## 🔧 Built With
 
-Built with:
 - React Native 0.72+
 - TypeScript
 - Custom game engine
 - Traditional Ludo rules implementation
-
-## 📦 APK Download
-
-After pushing to GitHub:
-1. Go to **Actions** tab in your repository
-2. Click on the latest **Build Android APK** workflow
-3. Download the **ludo-game-apk** artifact
-4. Extract and install the APK on your Android device
 
 ## Game Description
 

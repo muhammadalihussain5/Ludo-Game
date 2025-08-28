@@ -46,3 +46,8 @@ Thumbs.db
 # Build artifacts
 build/
 dist/
+
+# HTML demo files (keep only React Native)
+*.html
+web-*
+demo-*
