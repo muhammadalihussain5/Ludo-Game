@@ -1,4 +1,4 @@
-name: Simple APK Build
+name: Build Ludo Game APK
 
 on:
   workflow_dispatch:
@@ -8,39 +8,56 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
     
-    - name: Setup Node.js
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js 18
       uses: actions/setup-node@v4
       with:
         node-version: '18'
+        cache: 'npm'
     
-    - name: Setup JDK
+    - name: Setup JDK 17
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: '11'
-    
-    - name: Install npm dependencies
-      run: npm install
+        java-version: '17'
     
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
     
-    - name: Create gradle wrapper
+    - name: Install dependencies
+      run: |
+        npm ci --legacy-peer-deps
+    
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+    
+    - name: Make gradlew executable
+      run: chmod +x android/gradlew
+    
+    - name: Clean project
       run: |
         cd android
-        gradle wrapper
+        ./gradlew clean
     
-    - name: Build APK
+    - name: Build Release APK
       run: |
         cd android
-        chmod +x gradlew
-        ./gradlew assembleRelease
+        ./gradlew assembleRelease --no-daemon --stacktrace
     
-    - name: Upload APK
+    - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
-        name: android-apk
-        path: android/app/build/outputs/apk/release/*.apk
+        name: ludo-game-release-apk
+        path: android/app/build/outputs/apk/release/app-release.apk
+        retention-days: 30
